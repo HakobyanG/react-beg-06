@@ -1,0 +1,6 @@
+.task {
+    background-color: rgb(42, 133, 133);
+}
+.checked {
+    background-color: rgba(94, 15, 184, .3);
+}
