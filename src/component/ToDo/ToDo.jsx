@@ -26,7 +26,7 @@ class ToDo extends React.Component {
                 text: 'Task 3'
             },
         ],
-        checkedTasks:new Set(),
+        checkedTasks: new Set()
     }
 
     handleSubmit = (value) => {
@@ -50,13 +50,12 @@ class ToDo extends React.Component {
         });
 
     }
-    handleToggleCheckTask = (id) => {
+    handleToggleCheckTask = (_id) => {
         let checkedTasks = new Set(this.state.checkedTasks);
-        if (!checkedTasks.has(id)) {
-            checkedTasks.add(id);
-        } 
-        else {
-            checkedTasks = checkedTasks.filter(taskId => taskId !== id);
+        if (!checkedTasks.has(_id)) {
+            checkedTasks.add(_id);
+        } else {
+            checkedTasks.delete(_id);
         }
         this.setState({
             checkedTasks
@@ -64,12 +63,12 @@ class ToDo extends React.Component {
     }
     handleDeleteCheckedTasks = () => {
 
-        const { checkedTasks  } = this.state;
+        const { checkedTasks } = this.state;
         let tasks = [...this.state.tasks];
         tasks = tasks.filter(task => !checkedTasks.has(task._id));
         this.setState({
             tasks,
-            checkedTasks:new Set()
+            checkedTasks: new Set()
         });
 
     }
@@ -82,7 +81,7 @@ class ToDo extends React.Component {
                         task={task}
                         handleDeleteTask={this.handleDeleteTask}
                         handleToggleCheckTask={this.handleToggleCheckTask}
-                        isAnyTaskChecked={!!checkedTasks.length}
+                        isAnyTaskChecked={!!checkedTasks.size}
                         isChecked={checkedTasks.has(task._id)}
                     />
                 </Col>
@@ -98,22 +97,22 @@ class ToDo extends React.Component {
                         <h1 className={styles.heading1}>ToDo Component</h1>
                         <AddTask
                             handleSubmit={this.handleSubmit}
-                            isAnyTaskChecked={!!checkedTasks.length}
+                            isAnyTaskChecked={!!checkedTasks.size}
                         />
                     </Col>
                 </Row>
 
                 <Row className={tasksWrapperRowCls.join(' ')}  >
-                    {tasksJSX.length ? tasksJSX : <p>No Tasks !</p>}
+                    {tasksJSX.length ? tasksJSX : <p>There are no Tasks !</p>}
                 </Row>
 
                 <Row className="justify-content-center mt-5">
                     <Button
                         variant="danger"
                         onClick={this.handleDeleteCheckedTasks}
-                        disabled={!!checkedTasks.length}
+                        disabled={!!!checkedTasks.size}
                     >
-                        Delete All Checked!
+                        Delete All Cheked
                     </Button>
                 </Row>
             </Container>
