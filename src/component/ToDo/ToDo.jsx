@@ -26,7 +26,7 @@ class ToDo extends React.Component {
                 text: 'Task 3'
             },
         ],
-        checkedTasks: new Set()
+        checkedTasks: new Set(),
     }
 
     handleSubmit = (value) => {
@@ -72,8 +72,22 @@ class ToDo extends React.Component {
         });
 
     }
+    handleCheckAllTask =() => {
+        const { tasks } = this.state;
+        let checkedTasks = new Set(this.state.checkedTasks);
+        if (tasks.length === checkedTasks.size) {
+            checkedTasks.clear();
+        } else {
+            tasks.forEach(task => {
+                checkedTasks.add(task._id);
+            });
+        }
+        this.setState({
+            checkedTasks
+        });
+    }
     render() {
-        const { checkedTasks, tasks } = this.state;
+        const { checkedTasks, tasks ,value } = this.state;
         const tasksJSX = tasks.map(task => {
             return (
                 <Col key={task._id} className="mt-3" xs={12} sm={6} md={4} lg={3}>
@@ -81,6 +95,7 @@ class ToDo extends React.Component {
                         task={task}
                         handleDeleteTask={this.handleDeleteTask}
                         handleToggleCheckTask={this.handleToggleCheckTask}
+                        handleCheckAllTask={this.handleCheckAllTask}
                         isAnyTaskChecked={!!checkedTasks.size}
                         isChecked={checkedTasks.has(task._id)}
                     />
@@ -114,10 +129,19 @@ class ToDo extends React.Component {
                     >
                         Delete All Cheked
                     </Button>
+                    <Button
+                        type="checkbox"
+                        variant="success"
+                        className="ml-5"
+                        onClick={this.handleCheckAllTask}
+                    >
+                        Check All
+                    </Button>
                 </Row>
             </Container>
         );
     }
 };
+
 
 export default ToDo;

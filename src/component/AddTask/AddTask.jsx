@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import styles from './addtask.module.css';
-import { Form, Button, InputGroup } from 'react-bootstrap';
+import { Form,Button, InputGroup } from 'react-bootstrap';
 
 class AddTask extends PureComponent {
     state = {
@@ -28,6 +28,7 @@ class AddTask extends PureComponent {
 
     render() {
         const { isAnyTaskChecked } = this.props;
+        const {inputValue} = this.state;
         return (
             <div>
                 <InputGroup className="mb-5 mt-5">
@@ -42,10 +43,10 @@ class AddTask extends PureComponent {
                     />
                     <InputGroup.Append>
                         <Button
-                            variant="primary"
+                            variant="success"
                             onClick={this.handleS}
                             className="ml-3"
-                            disabled={isAnyTaskChecked}
+                            disabled={isAnyTaskChecked || !inputValue}
                         >
                             Add
                     </Button>

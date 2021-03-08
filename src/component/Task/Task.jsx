@@ -1,11 +1,11 @@
 import styles from './task.module.css';
 import { Card, Button } from 'react-bootstrap';
 
+
 const Task = ({
     task,
     handleDeleteTask,
     handleToggleCheckTask,
-    handleDeleteCheckedTasks,
     isAnyTaskChecked,
     isChecked
 }) => {
@@ -39,5 +39,6 @@ const Task = ({
 
     );
 };
+
 
 export default Task;
