@@ -1,6 +1,6 @@
 import styles from './task.module.css';
 import { Card, Button } from 'react-bootstrap';
-
+import PropTypes from 'prop-types';
 
 const Task = ({
     task,
@@ -39,6 +39,15 @@ const Task = ({
 
     );
 };
-
+Task.propTypes = {
+    task: PropTypes.node,
+    _id: PropTypes.string,
+    text: PropTypes.string,
+    handleDeleteTask: PropTypes.func,
+    handleToggleCheckTask: PropTypes.func,
+    handleCheckAllTask: PropTypes.func,
+    isAnyTaskChecked: PropTypes.bool,
+    isChecked: PropTypes.bool,
+}
 
 export default Task;

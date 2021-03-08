@@ -4,6 +4,7 @@ import AddTask from '../AddTask/AddTask';
 import styles from './todo.module.css';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import idGenerator from '../utils/idGenerator';
+import PropTypes from 'prop-types';
 
 const tasksWrapperRowCls = [
     "mt-5",
@@ -142,6 +143,8 @@ class ToDo extends React.Component {
         );
     }
 };
-
+ToDo.propTypes={
+    ToDo: PropTypes.element,
+}
 
 export default ToDo;

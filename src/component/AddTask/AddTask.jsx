@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import styles from './addtask.module.css';
 import { Form,Button, InputGroup } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 class AddTask extends PureComponent {
     state = {
@@ -56,5 +57,9 @@ class AddTask extends PureComponent {
         );
     }
 };
+AddTask.propTypes = {
+    handleSubmit: PropTypes.func,
+    isAnyTaskChecked: PropTypes.bool,
+}
 
 export default AddTask;
