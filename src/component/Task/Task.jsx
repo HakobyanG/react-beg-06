@@ -19,7 +19,8 @@ const Task = ({
                 onClick={() =>  handleToggleCheckTask (task._id)}
             />
             <Card.Body>
-                <Card.Title>{task.text}</Card.Title>
+            <Card.Title style={{ color: 'White' }}>{task.title}</Card.Title>
+            <Card.Text style={{ color: 'White' ,marginBottom:"30px"}}>{task.description}</Card.Text>
                 <Button
                     variant="danger"
                     onClick={() => handleDeleteTask(task._id)}
@@ -32,7 +33,7 @@ const Task = ({
                     className="ml-3"
                     disabled={isAnyTaskChecked}
                 >
-                    Join
+                    Edit
                 </Button>
             </Card.Body>
         </Card>
@@ -40,14 +41,16 @@ const Task = ({
     );
 };
 Task.propTypes = {
-    task: PropTypes.node,
-    _id: PropTypes.string,
-    text: PropTypes.string,
-    handleDeleteTask: PropTypes.func,
-    handleToggleCheckTask: PropTypes.func,
-    handleCheckAllTask: PropTypes.func,
-    isAnyTaskChecked: PropTypes.bool,
-    isChecked: PropTypes.bool,
+    task: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired
+    }),
+    handleDeleteTask: PropTypes.func.isRequired,
+    handleToggleCheckTask: PropTypes.func.isRequired,
+    isAnyTaskChecked: PropTypes.bool.isRequired,
+    isChecked: PropTypes.bool.isRequired
+
 }
 
 export default Task;
