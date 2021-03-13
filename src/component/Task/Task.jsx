@@ -7,7 +7,8 @@ const Task = ({
     handleDeleteTask,
     handleToggleCheckTask,
     isAnyTaskChecked,
-    isChecked
+    isChecked,
+    setEditableTask,
 }) => {
     const cls = [styles.task];
     if (isChecked)
@@ -32,6 +33,7 @@ const Task = ({
                     variant="warning"
                     className="ml-3"
                     disabled={isAnyTaskChecked}
+                    onClick={() => setEditableTask(task)}
                 >
                     Edit
                 </Button>

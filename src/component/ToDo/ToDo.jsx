@@ -4,8 +4,7 @@ import styles from './todo.module.css';
 import Confirm from '../Confirm/Confirm';
 import {Container, Row, Col, Button } from 'react-bootstrap';
 import idGenerator from '../utils/idGenerator';
-import PropTypes from 'prop-types';
-import AddTaskModal from '../AddTaskModal/AddTaskModal';
+import AddEditTaskModal from '../AddEditTaskModal/AddEditTaskModal'
 
 const tasksWrapperRowCls = [
     "mt-5",
@@ -36,15 +35,16 @@ class ToDo extends React.Component {
         checkedTasks: new Set(),
         OpenAddTaskModal: false,
         OpenConfirm: false,
+        editableTask: null
     }
     toggleOpenConfirm = () => {
         this.setState({
-            OpenConfirm: !this.state.OpenConfirm
+            openConfirm: !this.state.openConfirm
         });
     }
     toggleOpenAddTaskModal = () => {
         this.setState({
-            OpenAddTaskModal: !this.state.OpenAddTaskModal
+            openAddTaskModal: !this.state.openAddTaskModal
         });
     }
     handleSubmit = (formData) => {
@@ -104,12 +104,33 @@ class ToDo extends React.Component {
             checkedTasks
         });
     }
+    setEditableTask = (editableTask) => {
+        this.setState({
+            editableTask
+        });
+    }
+    removeEditableTask = () => {
+        this.setState({
+            editableTask: null
+        });
+    }
+    handleEditTask = (editableTask) => {
+        const tasks = [...this.state.tasks];
+        const idx = tasks.findIndex(task => task._id === editableTask._id);
+        tasks[idx] = editableTask;
+        this.setState({
+            tasks
+        });
+
+    }
+
     render() {
         const { 
             checkedTasks,
              tasks ,
-             OpenAddTaskModal ,
-             OpenConfirm,
+             openAddTaskModal ,
+             openConfirm,
+             editableTask,
             } = this.state;
         const tasksJSX = tasks.map(task => {
             return (
@@ -120,6 +141,7 @@ class ToDo extends React.Component {
                         handleToggleCheckTask={this.handleToggleCheckTask}
                         isAnyTaskChecked={!!checkedTasks.size}
                         isChecked={checkedTasks.has(task._id)}
+                        setEditableTask={this.setEditableTask}
                     />
                 </Col>
             );
@@ -167,26 +189,30 @@ class ToDo extends React.Component {
                     </Row>
                 </Container>
 
-
-                { OpenAddTaskModal && <AddTaskModal
-                    onHide={this.toggleOpenAddTaskModal}
+              { openAddTaskModal &&  <AddEditTaskModal
+                    onHide={this.toggleOpenAddTaskModal }
                     onSubmit={this.handleSubmit}
                     isAnyTaskChecked={!!checkedTasks.size}
-                />}
 
+                />
+                    }
+                    { editableTask && <AddEditTaskModal
+                    onHide={ this.removeEditableTask }
+                    onSubmit={this.handleEditTask}
+                    editableTask={editableTask}
 
+                />
+                    }
                  {
-                    OpenConfirm && <Confirm
+                    openConfirm && <Confirm
                         onHide={this.toggleOpenConfirm}
                         onSubmit={this.handleDeleteCheckedTasks}
                     />
                 }
+
              </>
         );
     }
 };
-ToDo.propTypes={
-    ToDo: PropTypes.element,
-}
 
 export default ToDo;

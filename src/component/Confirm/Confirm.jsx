@@ -13,7 +13,7 @@ const Confirm = (props) => {
                 <Modal.Title>Do You want to delete  ?  </Modal.Title>
             </Modal.Header>
             <Modal.Footer>
-                <Button variant="secondary" onClick={onHide}>
+                <Button variant="info" onClick={onHide}>
                     Cancel
           </Button>
                 <Button variant="danger"
