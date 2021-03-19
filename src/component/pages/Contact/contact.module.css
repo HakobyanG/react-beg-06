@@ -1,0 +1,24 @@
+
+.contactme{
+    font-size: 80px;
+    color:  rgb(38, 175, 72);
+    box-shadow: 0 0 70px green;
+}
+.but{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+ }
+ .back{
+     color: yellow;
+     border: 2px solid yellow;
+ }
+ .go{
+     font-size: 30px;
+     color: rgb(9, 160, 47);
+     background-color: yellow;
+     
+ }
+ .go:hover{
+    background-color: tomato;
+  }

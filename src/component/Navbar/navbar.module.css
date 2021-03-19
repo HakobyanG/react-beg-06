@@ -1,0 +1,18 @@
+.nabar{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.activeNavLink {
+    border:1px solid rgb(58, 179, 2);
+    background-color: rgb(19, 163, 19);
+}
+.nav_link {
+    font-size: 20px;
+    color: rgb(253, 249, 0);
+    border:1px solid rgb(58, 179, 2);
+    margin: 8px;
+  }
+  .nav_link:hover{
+    color:chocolate
+  }

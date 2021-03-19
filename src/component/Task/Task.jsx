@@ -22,6 +22,7 @@ const Task = ({
             <Card.Body>
             <Card.Title style={{ color: 'White' }}>{task.title}</Card.Title>
             <Card.Text style={{ color: 'White' ,marginBottom:"30px"}}>{task.description}</Card.Text>
+            <Card.Text style={{ color: 'white', marginBottom: "30px" }}>Date :{task.date}</Card.Text>   
                 <Button
                     variant="danger"
                     onClick={() => handleDeleteTask(task._id)}

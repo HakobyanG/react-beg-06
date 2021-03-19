@@ -1,16 +1,23 @@
 import React,{createRef} from "react"
 import { Modal, Button, Form } from 'react-bootstrap';
-
+import DatePicker from "react-datepicker";
+import formatDate from '../utils/dateFormatter';
 
 class AddEditTaskModal extends React.Component{
     constructor(props) {
         super(props);
-        this.titleInputRef = createRef(null);
+        this.inputRef = createRef();
         this.state = {
             title: "",
             description: "",
+            date: new Date(),
             ...props.editableTask
         }
+    }
+    setDate = (date) => {
+        this.setState({
+            date
+        });
     }
     handleChange = (event) => {
         const { name, value } = event.target;
@@ -25,36 +32,35 @@ class AddEditTaskModal extends React.Component{
             (type === 'keypress' && key !== 'Enter')
         )
             return;
-
-
-        this.props.onSubmit(this.state);
+            const formData = {
+                ...this.state,
+                date: formatDate(this.state.date)
+            }
+        this.props.onSubmit(formData);
         this.props.onHide();
     }
-    // componentDidMount() {
-    //     this.inputRef.current.focus();
-    // }
-
+    componentDidMount() {
+        this.inputRef.current.focus();
+    }
     render(){
-            const { onHide,isAnyTaskChecked } = this.props;
-            const { title, description } = this.state;
+            const { onHide,isAnyTaskChecked,editableTask} = this.props;
+            const { title, description ,date } = this.state;
         return (
             
             <>
-            {/* <Button >Edit</Button>{' '}
-            <Button >Add Task Modal</Button> */}
             <Modal
                 show={true}
                 onHide={onHide}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
-            >
+                >
                 <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-vcenter">
-                            Add Task Modal
+                           { editableTask ? "Edit Task Modal" : "Add Task Modal" }
                         </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>   
+                <Modal.Body >   
                         <Form className="mb-5 mt-5" onSubmit={(e) => e.preventDefault()}>
                             <Form.Group >
                                 <Form.Control
@@ -63,7 +69,6 @@ class AddEditTaskModal extends React.Component{
                                     placeholder="Title"
                                     onChange={this.handleChange}
                                     onKeyPress={this.handleS}
-                                    disabled={isAnyTaskChecked}
                                     ref={this.inputRef}
                                     value={title}
                                 />
@@ -78,7 +83,12 @@ class AddEditTaskModal extends React.Component{
                                     placeholder="Description"
                                     onChange={this.handleChange}
                                     value={description}
-                                    disabled={isAnyTaskChecked}
+                                />
+                            </Form.Group>
+                            <Form.Group >
+                                <DatePicker
+                                    selected={date}
+                                    onChange={date => this.setDate(date)}
                                 />
                             </Form.Group>
                         </Form>
@@ -90,56 +100,7 @@ class AddEditTaskModal extends React.Component{
                             onClick={this.handleS}
                             disabled={isAnyTaskChecked || !title || !description}
                         >
-                            Add
-                        </Button>
-                    </Modal.Footer>
-            </Modal>
-            <Modal
-                show={true}
-                    onHide={onHide}
-                    size="lg"
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-                >
-                    <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title-vcenter">
-                            Edit Task Modal
-            </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form className="mb-5 mt-5" onSubmit={(e) => e.preventDefault()}>
-                            <Form.Group >
-                                <Form.Control
-                                    name="title"
-                                    type="text"
-                                    placeholder="Title"
-                                    onChange={this.handleChange}
-                                    onKeyPress={this.handleS}
-                                    ref={this.titleInputRef}
-                                    value={title}
-                                />
-
-                            </Form.Group>
-                            <Form.Group >
-                                <Form.Control
-                                    name="description"
-                                    as="textarea"
-                                    rows={3}
-                                    style={{ resize: "none" }}
-                                    placeholder="Description"
-                                    onChange={this.handleChange}
-                                    value={description}
-                                />
-                            </Form.Group>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="warning" onClick={onHide}>Close</Button>
-                        <Button
-                            onClick={this.handleS}
-                            variant="success"
-                        >
-                            Save
+                            { editableTask ? "Save" : "Add" }
                         </Button>
                     </Modal.Footer>
             </Modal>
